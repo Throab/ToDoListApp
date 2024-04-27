@@ -116,9 +116,8 @@ class UpdateActivity : AppCompatActivity() {
             }else{
                 val updateNote = Note(noteId, newTitle,newContent, newTime, newDate, 0)
                 db.updateNote(updateNote)
-                adapter.refreshData(db.getAllNote())
                 finish()
-                Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Changes Applied", Toast.LENGTH_SHORT).show()
             }
 
 

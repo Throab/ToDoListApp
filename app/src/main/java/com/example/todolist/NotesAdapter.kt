@@ -47,6 +47,7 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         val currentTime = timeFormater.format(today.time)
         val cDate = LocalDate.parse(currentDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
         val cTime = LocalTime.parse(currentTime, DateTimeFormatter.ofPattern("HH:mm"))
+        holder.isPassedDue.visibility = View.GONE
         if(cDate.isAfter(LocalDate.parse(note.date, DateTimeFormatter.ofPattern("MM/dd/yyyy"))) ){
             holder.isPassedDue.visibility = View.VISIBLE
         }else if(cDate == LocalDate.parse(note.date, DateTimeFormatter.ofPattern("MM/dd/yyyy"))){
@@ -62,12 +63,13 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         holder.timeTextView.text = note.time
         holder.dateTextView.text = note.date
         holder.updateButton.setOnClickListener{
+            holder.isPassedDue.visibility = View.GONE
             val intent = Intent(holder.itemView.context, UpdateActivity::class.java).apply{
                 putExtra("note_id", note.id)
             }
             holder.itemView.context.startActivity(intent)
-        }
 
+        }
         holder.deleteButton.setOnClickListener{
             db.deleteNote(note.id)
             refreshData(db.getAllNote())

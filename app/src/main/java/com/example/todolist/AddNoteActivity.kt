@@ -44,11 +44,12 @@ class AddNoteActivity : AppCompatActivity() {
             val date = binding.addDateTextView.text.toString()
             if(title == "" ||
                 content == ""||
-                time =="--/--" ||
+                time =="--/--"||
                 cDate.isAfter( LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy")))||
-                (cDate == LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy")) &&
-                !cTime.isBefore(LocalTime.parse(time,DateTimeFormatter.ofPattern("HH:mm"))))
-                    ){
+                (time != "--/--" &&
+                        cDate == LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy"))&&
+                        !cTime.isBefore(LocalTime.parse(time,DateTimeFormatter.ofPattern("HH:mm"))))
+               ){
                 if(title == ""){
                     t.setBackgroundResource(R.drawable.red_border)
                     t.clearFocus()
@@ -69,8 +70,10 @@ class AddNoteActivity : AppCompatActivity() {
                 if(cDate.isAfter( LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy")))){
                     binding.addDateTextView.setBackgroundResource(R.drawable.red_border)
                 }else if(cDate == LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy"))){
-                    if(!cTime.isBefore(LocalTime.parse(time,DateTimeFormatter.ofPattern("HH:mm")))){
-                        binding.addTimeTextView.setBackgroundResource(R.drawable.red_border)
+                    if(time != "--/--"){
+                        if(!cTime.isBefore(LocalTime.parse(time,DateTimeFormatter.ofPattern("HH:mm")))){
+                            binding.addTimeTextView.setBackgroundResource(R.drawable.red_border)
+                        }
                     }
                 }else{
                     binding.addDateTextView.setBackgroundResource(R.drawable.green_border)

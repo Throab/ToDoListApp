@@ -6,8 +6,7 @@
 
     <item
         android:id="@+id/completed"
-        android:title="Completed"
-        android:icon="@drawable/baseline_check_box_24"
+        android:title="Completed Tasks"
         app:showAsAction="ifRoom"
         />
 </menu>

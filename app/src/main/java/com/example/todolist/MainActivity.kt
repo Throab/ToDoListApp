@@ -60,8 +60,10 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
     override fun onResume() {
         super.onResume()
         notesAdapter.refreshData(db.getAllNote())
     }
+
 }
