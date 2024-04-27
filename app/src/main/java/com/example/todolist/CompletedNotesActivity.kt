@@ -4,15 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist.databinding.ActivityCompletedTasksBinding
+import com.example.todolist.databinding.ActivityCompletedNotesBinding
 
-class CompletedTasksActivity : AppCompatActivity() {
+class CompletedNotesActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var db: NotesDatabaseHelper
     private lateinit var notesAdapter: CompletedNotesAdapter
-    private lateinit var binding: ActivityCompletedTasksBinding
+    private lateinit var binding: ActivityCompletedNotesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityCompletedTasksBinding.inflate(layoutInflater)
+        binding = ActivityCompletedNotesBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         db = NotesDatabaseHelper(this)

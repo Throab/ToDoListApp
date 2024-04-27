@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if(id == R.id.completed){
-            var intent = Intent(this, CompletedTasksActivity::class.java)
+            var intent = Intent(this, CompletedNotesActivity::class.java)
             startActivity(intent)
         }
         return true
