@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".AddNoteActivity"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+    <TextView
+        android:id="@+id/addNoteHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins"
+        android:text="Add Task."
+        android:textColor="@color/green"
+        android:textSize="24sp" />
+    <ImageView
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_done_24"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/addNoteHeading"
+        android:layout_marginEnd="6dp"
+        />
+    <EditText
+        android:id="@+id/addTitleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:hint="Enter the title."
+        android:padding="12dp"
+        android:textSize="20sp"
+        android:layout_below="@id/addNoteHeading"
+        android:background="@drawable/green_border"
+        android:layout_marginTop="19dp"
+        android:maxLines="1"
+        android:fontFamily="@font/poppins"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addTitleEditText"
+        android:id="@+id/addTimeContainer"
+        android:orientation="horizontal"
+        android:layout_marginTop="19dp">
+        <TextView
+            android:fontFamily="@font/poppins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Due to"
+            android:textSize="18sp"
+            android:layout_marginRight="30dp"/>
+        <TextView
+            android:fontFamily="@font/poppins"
+            android:id="@+id/addTimeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/green_border"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/addTimeEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_watch_later_24"
+            />
+        
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addTimeContainer"
+        android:id="@+id/addDateContainer"
+        android:orientation="horizontal"
+        android:layout_marginTop="19dp">
+
+        <TextView
+            android:fontFamily="@font/poppins"
+            android:id="@+id/addDateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/green_border"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="93dp"/>
+        <ImageButton
+            android:id="@+id/addDateEditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_calendar_month_24"
+            />
+
+    </LinearLayout>
+    <EditText
+        android:id="@+id/addContentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/addDateContainer"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/green_border"
+        android:gravity="top"
+        android:hint="Enter the description."
+        android:padding="12dp"
+        android:textSize="18sp" />
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/addTitleContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/addNoteHeading"-->
+<!--        app:helperText="required"-->
+<!--        >-->
+<!--    <com.google.android.material.textfield.TextInputEditText-->
+<!--        android:id="@+id/addTitleEditText"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:hint="Enter the title."-->
+<!--        android:padding="12dp"-->
+<!--        android:background="@drawable/green_border"-->
+<!--        android:layout_marginTop="19dp"-->
+<!--        android:maxLines="1"-->
+<!--        android:fontFamily="@font/poppins"-->
+<!--        />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/contentContainer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/addTitleContainer"-->
+<!--        >-->
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/addContentEditText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:hint="Enter the title."-->
+<!--            android:padding="12dp"-->
+<!--            android:background="@drawable/green_border"-->
+<!--            android:layout_marginTop="19dp"-->
+<!--            android:maxLines="1"-->
+<!--            android:fontFamily="@font/poppins"-->
+<!--            />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+</RelativeLayout>
