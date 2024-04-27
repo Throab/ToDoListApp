@@ -22,27 +22,33 @@ private lateinit var binding: ActivityAddNoteBinding
 private lateinit var db:NotesDatabaseHelper
 class AddNoteActivity : AppCompatActivity() {
     val today = Calendar.getInstance()
-//    val timeFormater = SimpleDateFormat("HH:mm")
-//    val dateFormater = SimpleDateFormat("MM/dd/yyyy")
+    val timeFormater = SimpleDateFormat("HH:mm")
+    val dateFormater = SimpleDateFormat("MM/dd/yyyy")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        val currentDate = dateFormater.format(today.time)
-//        val currentTime = timeFormater.format(today.time)
-//        val cDate = LocalDate.parse(currentDate,DateTimeFormatter.ofPattern("MM/dd/yyyy"))
-//        val cTime = LocalTime.parse(currentTime,DateTimeFormatter.ofPattern("HH:mm"))
+        val currentDate = dateFormater.format(today.time)
+        val currentTime = timeFormater.format(today.time)
+        val cDate = LocalDate.parse(currentDate,DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+        val cTime = LocalTime.parse(currentTime,DateTimeFormatter.ofPattern("HH:mm"))
         db = NotesDatabaseHelper(this)
         val t = findViewById<TextView>(R.id.addTitleEditText)
         val c = findViewById<TextView>(R.id.addContentEditText)
+        binding.addDateTextView.setText(currentDate)
         binding.saveButton.setOnClickListener{
 
             val title = binding.addTitleEditText.text.toString()
             val content = binding.addContentEditText.text.toString()
             val time = binding.addTimeTextView.text.toString()
             val date = binding.addDateTextView.text.toString()
-            if(title == "" || content == ""|| time =="--/--" || date =="--/--/----"){
-
+            if(title == "" ||
+                content == ""||
+                time =="--/--" ||
+                cDate.isAfter( LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy")))||
+                (cDate == LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy")) &&
+                !cTime.isBefore(LocalTime.parse(time,DateTimeFormatter.ofPattern("HH:mm"))))
+                    ){
                 if(title == ""){
                     t.setBackgroundResource(R.drawable.red_border)
                     t.clearFocus()
@@ -60,14 +66,16 @@ class AddNoteActivity : AppCompatActivity() {
                 }else{
                     binding.addTimeTextView.setBackgroundResource(R.drawable.green_border)
                 }
-                if(date =="--/--/----"){
+                if(cDate.isAfter( LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy")))){
                     binding.addDateTextView.setBackgroundResource(R.drawable.red_border)
+                }else if(cDate == LocalDate.parse(date,DateTimeFormatter.ofPattern("MM/dd/yyyy"))){
+                    if(!cTime.isBefore(LocalTime.parse(time,DateTimeFormatter.ofPattern("HH:mm")))){
+                        binding.addTimeTextView.setBackgroundResource(R.drawable.red_border)
+                    }
                 }else{
                     binding.addDateTextView.setBackgroundResource(R.drawable.green_border)
                 }
-
                 Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
-
             }
             else{
                 val note = Note(0, title, content, time, date, 0)
@@ -79,7 +87,6 @@ class AddNoteActivity : AppCompatActivity() {
 
         }
         binding.addTimeTextView.setText("--/--")
-        binding.addDateTextView.setText("--/--/----")
 
         val timeSetListener =
             TimePickerDialog.OnTimeSetListener{view, hour, minute ->

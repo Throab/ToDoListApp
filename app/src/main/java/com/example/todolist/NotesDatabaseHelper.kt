@@ -137,4 +137,17 @@ class NotesDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         db.update(TABLE_NAME, values, whereClause, whereArgs)
         db.close()
     }
+    fun getDueDate(): List<String>{
+        val dateList = mutableListOf<String>()
+        val db = writableDatabase
+        val query = "SELECT $COLUMN_DATE FROM $TABLE_NAME WHERE $COLUMN_DONE = 0 ORDER BY $COLUMN_DATE, $COLUMN_TIME"
+        val cursor = db.rawQuery(query, null)
+        while(cursor.moveToNext()){
+            val date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE))
+            dateList.add(date)
+        }
+        cursor.close()
+        db.close()
+        return dateList
+    }
 }

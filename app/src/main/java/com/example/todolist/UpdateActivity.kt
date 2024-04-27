@@ -8,17 +8,27 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.todolist.databinding.ActivityUpdateBinding
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class UpdateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateBinding
     private lateinit var db: NotesDatabaseHelper
+    private lateinit var adapter: NotesAdapter
     private var noteId: Int = -1
     val today = Calendar.getInstance()
+    val timeFormater = SimpleDateFormat("HH:mm")
+    val dateFormater = SimpleDateFormat("MM/dd/yyyy")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val currentDate = dateFormater.format(today.time)
+        val currentTime = timeFormater.format(today.time)
+        val cDate = LocalDate.parse(currentDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+        val cTime = LocalTime.parse(currentTime, DateTimeFormatter.ofPattern("HH:mm"))
         val t = findViewById<TextView>(R.id.updateTitleEditText)
         val c = findViewById<TextView>(R.id.updateContentEditText)
         db = NotesDatabaseHelper(this)
@@ -69,7 +79,11 @@ class UpdateActivity : AppCompatActivity() {
             val newContent = binding.updateContentEditText.text.toString()
             val newTime = binding.updateTimeTextView.text.toString()
             val newDate = binding.updateDateTextView.text.toString()
-            if(newTitle == "" || newContent == ""|| newTime =="--/--" || newDate =="--/--/----"){
+            if(newTitle == "" || newContent == ""||
+                cDate.isAfter( LocalDate.parse(newDate,DateTimeFormatter.ofPattern("MM/dd/yyyy")))||
+                (cDate == LocalDate.parse(newDate,DateTimeFormatter.ofPattern("MM/dd/yyyy")) &&
+                        !cTime.isBefore(LocalTime.parse(newTime,DateTimeFormatter.ofPattern("HH:mm"))))
+            ){
 
                 if(newTitle == ""){
                     t.setBackgroundResource(R.drawable.red_border)
@@ -83,13 +97,17 @@ class UpdateActivity : AppCompatActivity() {
                 }else{
                     c.setBackgroundResource(R.drawable.green_border)
                 }
-                if(newTime =="--/--"){
+                if(!cTime.isBefore(LocalTime.parse(newTime,DateTimeFormatter.ofPattern("HH:mm")))){
                     binding.updateTimeTextView.setBackgroundResource(R.drawable.red_border)
                 }else{
                     binding.updateTimeTextView.setBackgroundResource(R.drawable.green_border)
                 }
-                if(newDate =="--/--/----"){
+                if(cDate.isAfter( LocalDate.parse(newDate,DateTimeFormatter.ofPattern("MM/dd/yyyy")))){
                     binding.updateDateTextView.setBackgroundResource(R.drawable.red_border)
+                }else if(cDate == LocalDate.parse(newDate,DateTimeFormatter.ofPattern("MM/dd/yyyy"))){
+                    if(!cTime.isBefore(LocalTime.parse(newTime,DateTimeFormatter.ofPattern("HH:mm")))){
+                        binding.updateTimeTextView.setBackgroundResource(R.drawable.red_border)
+                    }
                 }else{
                     binding.updateDateTextView.setBackgroundResource(R.drawable.green_border)
                 }
@@ -98,6 +116,7 @@ class UpdateActivity : AppCompatActivity() {
             }else{
                 val updateNote = Note(noteId, newTitle,newContent, newTime, newDate, 0)
                 db.updateNote(updateNote)
+                adapter.refreshData(db.getAllNote())
                 finish()
                 Toast.makeText(this, "Changes Saved", Toast.LENGTH_SHORT).show()
             }
